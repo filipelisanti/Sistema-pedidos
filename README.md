@@ -89,7 +89,7 @@ Comercios: **Pizzería Don Luis** (ACTIVO, con envío y menú completo), **Empan
 ## Roadmap
 
 - [x] **Sprint 0**: monorepo, modelo de datos, migraciones, seed, lógica compartida con tests, CI
-- [ ] **Sprint 1**: front público con datos mock: menú, carrito, checkout y envío por WhatsApp
+- [x] **Sprint 1**: front público con datos mock: menú, carrito, checkout y envío por WhatsApp
 - [ ] **Sprint 2**: API pública: buscador de comercios y menú por slug
 - [ ] **Sprint 3**: login y panel del comercio (ABM de productos, horarios, zonas de envío)
 - [ ] **Sprint 4**: panel superadmin y solicitud de alta de comercios
