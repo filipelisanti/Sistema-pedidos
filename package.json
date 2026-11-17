@@ -1,0 +1,42 @@
+{
+  "name": "pedidos-whatsapp",
+  "private": true,
+  "description": "Plataforma multi-comercio para armar pedidos y enviarlos por WhatsApp",
+  "packageManager": "pnpm@10.28.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "pnpm -r build",
+    "build:shared": "pnpm --filter @pedidos/shared build",
+    "dev:api": "pnpm --filter @pedidos/api dev",
+    "dev:web": "pnpm --filter @pedidos/web dev",
+    "test": "pnpm -r test",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "db:up": "docker compose up -d db",
+    "db:down": "docker compose down",
+    "db:generate": "pnpm --filter @pedidos/api db:generate",
+    "db:migrate": "pnpm --filter @pedidos/api db:migrate",
+    "db:seed": "pnpm --filter @pedidos/api db:seed",
+    "db:studio": "pnpm --filter @pedidos/api db:studio"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.0",
+    "eslint": "^9.39.0",
+    "globals": "^16.0.0",
+    "prettier": "^3.6.0",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.46.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@nestjs/core",
+      "@parcel/watcher",
+      "argon2",
+      "esbuild"
+    ]
+  }
+}
