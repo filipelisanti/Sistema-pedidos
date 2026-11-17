@@ -5,7 +5,8 @@ export type EstadoDatos<T> =
 
 /**
  * Carga datos asíncronos y se re-ejecuta cuando cambia `clave`.
- * Provisorio: en el Sprint 2, con la API real, se reemplaza por TanStack Query.
+ * Alcanza mientras la app tenga pocas pantallas; si crece (caché, reintentos, refresco),
+ * conviene pasar a TanStack Query.
  */
 export function useDatos<T>(clave: string, cargar: () => Promise<T>): EstadoDatos<T> {
   const [resultado, setResultado] = useState<EstadoDatos<T> & { clave: string }>({

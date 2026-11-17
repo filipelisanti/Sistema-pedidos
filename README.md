@@ -72,6 +72,17 @@ Comercios: **Pizzería Don Luis** (ACTIVO, con envío y menú completo), **Empan
 | `pnpm db:generate` | Genera una migración SQL después de cambiar `src/db/schema.ts` |
 | `pnpm db:studio`   | Drizzle Studio: ver y editar la base desde el navegador        |
 
+## API pública
+
+Sin login. Solo expone comercios `ACTIVO`; uno `PENDIENTE` o `SUSPENDIDO` responde 404, igual que uno inexistente.
+
+| Endpoint                        | Devuelve (schema de `@pedidos/shared`)                         |
+| ------------------------------- | -------------------------------------------------------------- |
+| `GET /api/comercios`            | `ComercioResumen[]`: listado del buscador, ordenado por nombre |
+| `GET /api/comercios/:slug/menu` | `MenuComercio`: datos, horarios, zonas y menú ordenado         |
+
+La web valida cada respuesta con esos mismos schemas, y los tests de la API verifican que se cumplan. En producción, `VITE_API_URL` permite apuntar la web a otro dominio (por defecto usa `/api`).
+
 ## Reglas de negocio importantes
 
 - **Precios en pesos enteros** (integer), nunca float.
@@ -90,7 +101,7 @@ Comercios: **Pizzería Don Luis** (ACTIVO, con envío y menú completo), **Empan
 
 - [x] **Sprint 0**: monorepo, modelo de datos, migraciones, seed, lógica compartida con tests, CI
 - [x] **Sprint 1**: front público con datos mock: menú, carrito, checkout y envío por WhatsApp
-- [ ] **Sprint 2**: API pública: buscador de comercios y menú por slug
+- [x] **Sprint 2**: API pública: buscador de comercios y menú por slug
 - [ ] **Sprint 3**: login y panel del comercio (ABM de productos, horarios, zonas de envío)
 - [ ] **Sprint 4**: panel superadmin y solicitud de alta de comercios
 - [ ] **Sprint 5**: "abierto ahora", imágenes, PWA, Lighthouse y deploy

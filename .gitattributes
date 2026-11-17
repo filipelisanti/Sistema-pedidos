@@ -1,0 +1,7 @@
+# Todo el repo usa LF (lo exige Prettier y .editorconfig), aunque Git en Windows tenga core.autocrlf=true
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.ico binary
+*.webp binary

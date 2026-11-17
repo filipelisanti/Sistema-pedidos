@@ -1,8 +1,8 @@
 import type { Horario, MenuComercio } from '@pedidos/shared';
 
 /**
- * Datos mock del Sprint 1: espejan el seed de la API (mismos comercios, productos e IDs
- * en el orden en que los inserta el seed). En el Sprint 2 se reemplazan por la API real.
+ * Datos de prueba para los tests de la web: espejan el seed de la API (mismos comercios, productos e IDs
+ * en el orden en que los inserta el seed). Los sirve la API falsa de test/api-falsa.ts.
  * Solo incluye comercios ACTIVOS: los PENDIENTE/SUSPENDIDO nunca llegan al front público.
  */
 

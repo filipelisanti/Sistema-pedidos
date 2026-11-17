@@ -1,6 +1,7 @@
 import { screen, within } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { claveCarrito } from '../src/carrito/useCarrito';
+import { instalarApiFalsa } from './api-falsa';
 import { renderApp } from './utils';
 
 const DON_LUIS = '/c/pizzeria-don-luis';
@@ -158,5 +159,38 @@ describe('checkout', () => {
     const mensaje = new URL(String(open.mock.calls[0]?.[0])).searchParams.get('text') ?? '';
     expect(mensaje).toContain('Retiro en el local');
     expect(mensaje).toContain('*Pago:* Transferencia');
+  });
+});
+
+describe('errores de la API', () => {
+  it('avisa si no puede cargar los comercios', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new TypeError('Failed to fetch')));
+    renderApp('/');
+    expect(await screen.findByText(/No pudimos cargar los comercios/)).toBeInTheDocument();
+  });
+
+  it('avisa si la API responde con error', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(new Response('boom', { status: 500 })));
+    renderApp(DON_LUIS);
+    expect(await screen.findByText(/No pudimos cargar el menú/)).toBeInTheDocument();
+  });
+
+  it('rechaza una respuesta que no cumple el contrato', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue(new Response(JSON.stringify({ nombre: 'incompleto' }))),
+    );
+    renderApp(DON_LUIS);
+    expect(await screen.findByText(/No pudimos cargar el menú/)).toBeInTheDocument();
+  });
+
+  it('pide el menú del slug a la API', async () => {
+    const fetchFalso = instalarApiFalsa();
+    renderApp(DON_LUIS);
+    await screen.findByRole('heading', { name: 'Pizzería Don Luis' });
+    expect(fetchFalso).toHaveBeenCalledWith(
+      '/api/comercios/pizzeria-don-luis/menu',
+      expect.anything(),
+    );
   });
 });
